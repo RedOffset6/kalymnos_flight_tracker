@@ -36,7 +36,7 @@ outbound_date = datetime(2024, 4, 4, 00, 00, 00)
 return_date = datetime(2024, 4, 11, 00, 00, 00)
 
 outbound_flights = api.get_cheapest_flights("STN", outbound_date, outbound_date + timedelta(days=1), destination_airport = "KGS")
-inbound_flights = api.get_cheapest_flights("KGS", outbound_date, outbound_date + timedelta(days=1), destination_airport = "STN")
+inbound_flights = api.get_cheapest_flights("KGS", return_date, return_date + timedelta(days=1), destination_airport = "STN")
 
 print(outbound_date)
 

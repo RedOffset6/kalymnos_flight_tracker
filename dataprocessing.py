@@ -17,7 +17,10 @@ inbound_prices = [entry['inbound_price'] for entry in price_list]
 def pound_sign_formatter(x, _):
     return f'£{x:.2f}'
 
-
+#adding the price I paid to the list 
+dates.append(datetime(2024, 1, 11, 22, 00, 00))
+outbound_prices.append(32.23)
+inbound_prices.append(53.02)
 
 
 # fig, ax = plt.subplots()
