@@ -6,6 +6,7 @@ from datetime import datetime, timedelta, date
 from ryanair import Ryanair
 from ryanair.types import Flight
 import pickle as pkl
+import os
 
 #This line creates a blank price list
 
@@ -13,8 +14,15 @@ import pickle as pkl
 # with open(f'data/prices.pkl', 'wb') as f:
 #    pkl.dump(price_list, f)
 
+
+
+# Get the absolute path to the script's directory
+script_dir = os.path.dirname(os.path.abspath(__file__))
+
+
+
 #opens the file and reads in the pricing info
-with open(f'data/prices.pkl', 'rb') as f:
+with open(os.path.join(script_dir, 'data/prices.pkl'), 'rb') as f:
     price_list = pkl.load(f)
 
 
@@ -59,5 +67,5 @@ price_dict["inbound_price"] = inbound_price
 price_list.append(price_dict)
 
 #saves the updated price list
-with open(f'data/prices.pkl', 'wb') as f:
+with open(os.path.join(script_dir, 'data/prices.pkl'), 'wb') as f:
     pkl.dump(price_list, f)
