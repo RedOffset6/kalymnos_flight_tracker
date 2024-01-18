@@ -4,6 +4,7 @@ from datetime import datetime
 import matplotlib.dates as mdates
 from matplotlib.ticker import FuncFormatter
 import numpy as np
+import seaborn as sns
 
 #opens the file and reads in the pricing info
 with open(f'data/prices.pkl', 'rb') as f:
@@ -22,20 +23,19 @@ dates.append(datetime(2024, 1, 11, 22, 00, 00))
 outbound_prices.append(32.23)
 inbound_prices.append(53.02)
 
+# Create a DataFrame for Seaborn
+import pandas as pd
+df = pd.DataFrame({'Date': dates, 'outbound_price': outbound_prices, 'inbound_price': inbound_prices})
+df["total_price"] = df["outbound_price"] + df["inbound_price"]
 
-# fig, ax = plt.subplots()
+# Set the seaborn style
+sns.set_style("darkgrid", {"grid.color": ".6", "grid.linestyle": ":"})
 
-# ax.scatter(dates, outbound_prices)
-# ax.scatter(dates, inbound_prices)
-
-# Plotting
-plt.figure(figsize=(10, 6))
-
-total_price = np.array(outbound_prices) + np.array(inbound_prices)
-
-plt.plot(dates, outbound_prices, label='Outbound Price', marker='o')
-plt.plot(dates, inbound_prices, label='Inbound Price', marker='o')
-plt.plot(dates, total_price, label='Total Price', marker='o')
+# Plotting with Seaborn
+plt.figure(figsize=(12, 6))
+sns.lineplot(x='Date', y='outbound_price', data=df, label='Outbound Price', marker='o')
+sns.lineplot(x='Date', y='inbound_price', data=df, label='Inbound Price', marker='o')
+sns.lineplot(x='Date', y='total_price', data=df, label='Total Price', marker='o')
 
 # Formatting the x-axis to show dates elegantly
 plt.gca().xaxis.set_major_formatter(mdates.DateFormatter('%Y-%m-%d %H:%M:%S'))
@@ -45,13 +45,22 @@ plt.gca().xaxis.set_major_locator(mdates.AutoDateLocator(minticks=5, maxticks=10
 plt.gca().yaxis.set_major_formatter(FuncFormatter(pound_sign_formatter))
 
 plt.xlabel('Date Checked')
-plt.ylabel('Price')
+plt.ylabel('Price (£)')
 plt.title('Flight Prices Over Time')
-plt.legend()
-plt.xticks(rotation=45)
+
+# Rotate x-axis labels for better readability
+plt.xticks(rotation=45, ha='right')
+
+# Beautify the legend
+plt.legend(frameon=False)
+
+# Optionally, add shaded region for weekends
+for i in range(len(dates) - 1):
+    if dates[i].weekday() == 4:  # Friday
+        plt.axvspan(dates[i], dates[i + 1], facecolor='lightgray', alpha=0.2)
+
 plt.tight_layout()
 
-#plt.show()
 
 plt.savefig("plots/price_plot.png")
 
