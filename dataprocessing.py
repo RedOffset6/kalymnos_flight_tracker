@@ -44,9 +44,9 @@ plt.gca().xaxis.set_major_locator(mdates.AutoDateLocator(minticks=5, maxticks=10
 # Formatting y-axis to include £ sign
 plt.gca().yaxis.set_major_formatter(FuncFormatter(pound_sign_formatter))
 
-plt.xlabel('Date Checked')
-plt.ylabel('Price (£)')
-plt.title('Flight Prices Over Time')
+plt.xlabel('Date Checked',  fontsize=18)
+plt.ylabel('Price (£)',  fontsize=18)
+plt.title('Flight Prices Over Time',  fontsize=26)
 
 # Rotate x-axis labels for better readability
 plt.xticks(rotation=45, ha='right')
