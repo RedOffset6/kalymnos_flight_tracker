@@ -67,3 +67,8 @@ plt.savefig("plots/price_plot.png")
 # print(price_list)
 
 print(f"The ticket price has been recorded {len(price_list)} times")
+
+daily_change = (df["total_price"].max() - df["total_price"].min()) / (19-12)
+
+print(f"The average daily price increase was £{daily_change}")
+
